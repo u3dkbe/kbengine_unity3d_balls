@@ -1,0 +1,23 @@
+<root>
+	<Implements>
+		<Interface>	EntityCommon		</Interface>
+	</Implements>
+
+	<Properties>
+		<mass>
+			<Type>		INT8				</Type>
+			<Flags>		CELL_PUBLIC			</Flags>
+			<Default>		0				</Default>
+		</mass>
+	</Properties>
+
+	<ClientMethods>
+	</ClientMethods>
+
+	<BaseMethods>
+	</BaseMethods>
+
+	<CellMethods>
+	</CellMethods>
+
+</root>

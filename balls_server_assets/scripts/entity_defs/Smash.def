@@ -1,0 +1,23 @@
+<root>
+	<Implements>
+		<Interface>	EntityCommon		</Interface>
+	</Implements>
+
+	<Properties>
+		<modelScale>
+			<Type>		FLOAT				</Type>
+			<Flags>		ALL_CLIENTS			</Flags>
+			<Default>		1.0				</Default>
+		</modelScale>
+	</Properties>
+
+	<ClientMethods>
+	</ClientMethods>
+
+	<BaseMethods>
+	</BaseMethods>
+
+	<CellMethods>
+	</CellMethods>
+
+</root>

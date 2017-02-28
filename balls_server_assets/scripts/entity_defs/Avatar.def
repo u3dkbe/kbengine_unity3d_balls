@@ -1,0 +1,70 @@
+<root>
+	<Implements>
+		<Interface>	EntityCommon		</Interface>
+	</Implements>
+
+	<Properties>
+		<roomKey>
+			<Type>		SPACE_KEY			</Type>
+			<Flags>		BASE				</Flags>
+			<Persistent>		true				</Persistent>
+		</roomKey>
+
+		<name>
+			<Type>		UNICODE			</Type>
+			<Flags>		ALL_CLIENTS			</Flags>
+			<Persistent>		true				</Persistent>
+			<DetailLevel>		MEDIUM			</DetailLevel>
+		</name>
+
+		<dbid>
+			<Type>		DBID				</Type>
+			<Flags>		CELL_PUBLIC			</Flags>
+			<Default>		0				</Default>
+		</dbid>
+
+		<mass>
+			<Type>		INT32				</Type>
+			<Flags>		OWN_CLIENT			</Flags>
+			<Default>		10				</Default>
+		</mass>
+
+		<level> <!-- 毫克、克、千克、吨、万吨 -->
+			<Type>		UINT8				</Type>
+			<Flags>		OWN_CLIENT			</Flags>
+			<Default>		1				</Default>
+		</level>
+
+		<moveSpeed>
+			<Type>		FLOAT				</Type>
+			<Flags>		ALL_CLIENTS			</Flags>
+			<Default>		6.5				</Default>
+		</moveSpeed>
+
+		<modelScale>
+			<Type>		FLOAT				</Type>
+			<Flags>		ALL_CLIENTS			</Flags>
+			<Default>		0.3				</Default>
+		</modelScale>
+
+		<state>
+			<Type>		INT8				</Type> <!-- 为0时处于保护状态，1时可被吃 -->
+			<Flags>		ALL_CLIENTS			</Flags> 
+			<Persistent>		true				</Persistent> 
+			<Default>		0				</Default>
+		</state>
+	</Properties>
+
+	<ClientMethods>
+	</ClientMethods>
+
+	<BaseMethods>
+		<createCell>
+			<Arg>		MAILBOX					</Arg>
+		</createCell>
+	</BaseMethods>
+
+	<CellMethods>
+	</CellMethods>
+
+</root>

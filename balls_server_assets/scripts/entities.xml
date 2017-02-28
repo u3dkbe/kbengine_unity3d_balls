@@ -1,0 +1,13 @@
+<root>
+	<!--
+		实体注册文件(<你的资产库>/scripts/entities.xml)
+		详细说明请参考：http://kbengine.org/cn/docs/configuration/entities.html
+					http://www.kbengine.org/cn/docs/programming/entitydef.html
+	-->
+
+	<Avatar hasClient="true"></Avatar><!-- <Avatar hasCell="true" hasBase="true" hasClient="true"></Player> -->
+	<Halls/>
+	<Room/>
+	<Food hasClient="true"></Food>
+	<Smash hasClient="true"></Smash>
+</root>

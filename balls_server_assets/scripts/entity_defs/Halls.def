@@ -1,0 +1,25 @@
+<root>
+	<Properties>
+	</Properties>
+
+	<ClientMethods>
+	</ClientMethods>
+
+	<BaseMethods>
+		<enterRoom>
+			<Arg>		MAILBOX		</Arg>
+			<Arg>		POSITION3D		</Arg>
+			<Arg>		DIRECTION3D		</Arg>
+			<Arg>		SPACE_KEY		</Arg>
+		</enterRoom>
+
+		<leaveRoom>
+			<Arg>		ENTITY_ID		</Arg>
+			<Arg>		SPACE_KEY		</Arg>
+		</leaveRoom>
+	</BaseMethods>
+
+	<CellMethods>
+	</CellMethods>
+
+</root>
