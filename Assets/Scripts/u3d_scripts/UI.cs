@@ -1,4 +1,4 @@
-﻿using KBEngine;
+using KBEngine;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System; 
@@ -40,8 +40,8 @@ public class UI : MonoBehaviour
 	{
 		// common
 		KBEngine.Event.registerOut("onKicked", this, "onKicked");
-		KBEngine.Event.registerOut("onDisableConnect", this, "onDisableConnect");
-		KBEngine.Event.registerOut("onConnectStatus", this, "onConnectStatus");
+		KBEngine.Event.registerOut("onDisconnected", this, "onDisconnected");
+		KBEngine.Event.registerOut("onConnectionState", this, "onConnectionState");
 		
 		// login
 		KBEngine.Event.registerOut("onCreateAccountResult", this, "onCreateAccountResult");
@@ -211,7 +211,7 @@ public class UI : MonoBehaviour
 		}
 	}
 	
-	public void onConnectStatus(bool success)
+	public void onConnectionState(bool success)
 	{
 		if(!success)
 			err("connect(" + KBEngineApp.app.getInitArgs().ip + ":" + KBEngineApp.app.getInitArgs().port + ") is error! (连接错误)");
@@ -279,7 +279,7 @@ public class UI : MonoBehaviour
 		info("importClientEntityDef ...");
 	}
 	
-	public void onDisableConnect()
+	public void onDisconnected()
 	{
         SceneManager.LoadScene("login");
         ui_state = 0;
