@@ -1,7 +1,7 @@
 # kbengine_unity3d_balls
 
-°²×°·½·¨²Î¿¼£ºhttps://github.com/kbengine/kbengine_unity3d_demo
-ÆäÖĞ·şÎñÆ÷kbengine_demos_assetsÖ±½ÓÓÃballs_server_assetsÌæ´ú¼´¿É£¬Õâ¸öÊÇ×¨ÃÅÎªÕâ¸ödemoĞ´µÄ¡£
+å®‰è£…æ–¹æ³•å‚è€ƒï¼šhttps://github.com/kbengine/kbengine_unity3d_demo
+å…¶ä¸­æœåŠ¡å™¨kbengine_demos_assetsç›´æ¥ç”¨balls_server_assetsæ›¿ä»£å³å¯ï¼Œè¿™ä¸ªæ˜¯ä¸“é—¨ä¸ºè¿™ä¸ªdemoå†™çš„ã€‚
 
-##Screenshots:
+## Screenshots:
 ![screenshots1](http://www.kbengine.org/assets/img/screenshots/balls_demo1.png)
