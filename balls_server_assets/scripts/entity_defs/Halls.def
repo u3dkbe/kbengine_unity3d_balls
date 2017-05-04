@@ -17,6 +17,15 @@
 			<Arg>		ENTITY_ID		</Arg>
 			<Arg>		SPACE_KEY		</Arg>
 		</leaveRoom>
+	
+		<onRoomLoseCell>
+			<Arg>		SPACE_KEY		</Arg>
+		</onRoomLoseCell>
+		
+		<onRoomGetCell>
+			<Arg>		MAILBOX			</Arg>
+			<Arg>		SPACE_KEY		</Arg>
+		</onRoomGetCell>
 	</BaseMethods>
 
 	<CellMethods>
