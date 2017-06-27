@@ -34,7 +34,7 @@ def onLoginAppShutDown():
 	"""
 	INFO_MSG('onLoginAppShutDown()')
 
-def onReuqestLogin(loginName, password, clientType, datas):
+def onRequestLogin(loginName, password, clientType, datas):
 	"""
 	KBEngine method.
 	账号请求登陆时回调
