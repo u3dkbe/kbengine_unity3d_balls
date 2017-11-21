@@ -1,7 +1,7 @@
 <root>
-	<Implements>
+	<Interfaces>
 		<Interface>	EntityCommon		</Interface>
-	</Implements>
+	</Interfaces>
 
 	<Properties>
 		<roomKey>
@@ -29,7 +29,7 @@
 			<Default>		10				</Default>
 		</mass>
 
-		<level> <!-- ºÁ¿Ë¡¢¿Ë¡¢Ç§¿Ë¡¢¶Ö¡¢Íò¶Ö -->
+		<level> <!-- æ¯«å…‹ã€å…‹ã€åƒå…‹ã€å¨ã€ä¸‡å¨ -->
 			<Type>		UINT8				</Type>
 			<Flags>		OWN_CLIENT			</Flags>
 			<Default>		1				</Default>
@@ -48,7 +48,7 @@
 		</modelScale>
 
 		<state>
-			<Type>		INT8				</Type> <!-- Îª0Ê±´¦ÓÚ±£»¤×´Ì¬£¬1Ê±¿É±»³Ô -->
+			<Type>		INT8				</Type> <!-- ä¸º0æ—¶å¤„äºŽä¿æŠ¤çŠ¶æ€ï¼Œ1æ—¶å¯è¢«åƒ -->
 			<Flags>		ALL_CLIENTS			</Flags> 
 			<Persistent>		true				</Persistent> 
 			<Default>		0				</Default>
