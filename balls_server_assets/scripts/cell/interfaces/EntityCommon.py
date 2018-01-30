@@ -37,7 +37,7 @@ class EntityCommon:
 	
 	def getCurrRoomBase(self):
 		"""
-		获得当前space的entity baseMailbox
+		获得当前space的entity baseEntityCall
 		"""
 		return KBEngine.globalData.get("Room_%i" % self.spaceID)
 

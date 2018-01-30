@@ -32,7 +32,7 @@ class Room(KBEngine.Entity):
 		
 		DEBUG_MSG('created space[%d] entityID = %i, res = %s.' % (self.roomKeyC, self.id, "spaces/gameMap"))
 		
-		# 让baseapp和cellapp都能够方便的访问到这个房间的mailbox
+		# 让baseapp和cellapp都能够方便的访问到这个房间的entityCall
 		KBEngine.globalData["Room_%i" % self.spaceID] = self.base
 	
 		# 设置房间必要的数据，客户端可以获取之后做一些显示和限制
@@ -122,13 +122,13 @@ class Room(KBEngine.Entity):
 			
 		self.smashs.remove(smashID)
 		
-	def onEnter(self, entityMailbox):
+	def onEnter(self, entityCall):
 		"""
 		defined method.
 		进入场景
 		"""
-		DEBUG_MSG('Room::onEnter space[%d] entityID = %i.' % (self.spaceID, entityMailbox.id))
-		self.avatars[entityMailbox.id] = entityMailbox
+		DEBUG_MSG('Room::onEnter space[%d] entityID = %i.' % (self.spaceID, entityCall.id))
+		self.avatars[entityCall.id] = entityCall
 
 	def onLeave(self, entityID):
 		"""

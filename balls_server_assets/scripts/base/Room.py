@@ -5,13 +5,13 @@ import copy
 import math
 from KBEDebug import *
 
-class Room(KBEngine.Base):
+class Room(KBEngine.Entity):
 	"""
 	一个可操控cellapp上真正space的实体
 	注意：它是一个实体，并不是真正的space，真正的space存在于cellapp的内存中，通过这个实体与之关联并操控space。
 	"""
 	def __init__(self):
-		KBEngine.Base.__init__(self)
+		KBEngine.Entity.__init__(self)
 		
 		self.cellData["roomKeyC"] = self.roomKey
 		
@@ -20,13 +20,13 @@ class Room(KBEngine.Base):
 		
 		self.avatars = {}
 
-	def enterRoom(self, entityMailbox, position, direction):
+	def enterRoom(self, entityCall, position, direction):
 		"""
 		defined method.
 		请求进入某个space中
 		"""
-		entityMailbox.createCell(self.cell)
-		self.onEnter(entityMailbox)
+		entityCall.createCell(self.cell)
+		self.onEnter(entityCall)
 
 	def leaveRoom(self, entityID):
 		"""
@@ -43,12 +43,12 @@ class Room(KBEngine.Base):
 		#DEBUG_MSG("%s::onTimer: %i, tid:%i, arg:%i" % (self.getScriptName(), self.id, tid, userArg))
 		pass
 		
-	def onEnter(self, entityMailbox):
+	def onEnter(self, entityCall):
 		"""
 		defined method.
 		进入场景
 		"""
-		self.avatars[entityMailbox.id] = entityMailbox
+		self.avatars[entityCall.id] = entityCall
 		
 	def onLeave(self, entityID):
 		"""
