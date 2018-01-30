@@ -60,7 +60,7 @@
 
 	<BaseMethods>
 		<createCell>
-			<Arg>		MAILBOX					</Arg>
+			<Arg>		ENTITYCALL					</Arg>
 		</createCell>
 	</BaseMethods>
 

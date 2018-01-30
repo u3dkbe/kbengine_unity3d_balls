@@ -7,7 +7,7 @@
 
 	<BaseMethods>
 		<enterRoom>
-			<Arg>		MAILBOX		</Arg>
+			<Arg>		ENTITYCALL		</Arg>
 			<Arg>		POSITION3D		</Arg>
 			<Arg>		DIRECTION3D		</Arg>
 			<Arg>		SPACE_KEY		</Arg>
@@ -23,7 +23,7 @@
 		</onRoomLoseCell>
 		
 		<onRoomGetCell>
-			<Arg>		MAILBOX			</Arg>
+			<Arg>		ENTITYCALL			</Arg>
 			<Arg>		SPACE_KEY		</Arg>
 		</onRoomGetCell>
 	</BaseMethods>

@@ -8,17 +8,17 @@ import GameConfigs
 FIND_ROOM_NOT_FOUND = 0
 FIND_ROOM_CREATING = 1
 
-class Halls(KBEngine.Base):
+class Halls(KBEngine.Entity):
 	"""
 	这是一个脚本层封装的房间管理器
 	"""
 	def __init__(self):
-		KBEngine.Base.__init__(self)
+		KBEngine.Entity.__init__(self)
 		
-		# 向全局共享数据中注册这个管理器的mailbox以便在所有逻辑进程中可以方便的访问
+		# 向全局共享数据中注册这个管理器的entityCall以便在所有逻辑进程中可以方便的访问
 		KBEngine.globalData["Halls"] = self
 
-		# 所有房间，是个字典结构，包含 {"roomMailbox", "PlayerCount", "enterRoomReqs"}
+		# 所有房间，是个字典结构，包含 {"roomEntityCall", "PlayerCount", "enterRoomReqs"}
 		# enterRoomReqs, 在房间未创建完成前， 请求进入房间和登陆到房间的请求记录在此，等房间建立完毕将他们扔到space中
 		self.rooms = {}
 
@@ -44,19 +44,19 @@ class Halls(KBEngine.Base):
 			
 			# 将房间base实体创建在任意baseapp上
 			# 此处的字典参数中可以对实体进行提前def属性赋值
-			KBEngine.createBaseAnywhere("Room", \
+			KBEngine.createEntityAnywhere("Room", \
 									{
 									"roomKey" : self.lastNewRoomKey,	\
 									}, \
 									Functor.Functor(self.onRoomCreatedCB, self.lastNewRoomKey))
 			
-			roomDatas = {"roomMailbox" : None, "PlayerCount": 0, "enterRoomReqs" : [], "roomKey" : self.lastNewRoomKey}
+			roomDatas = {"roomEntityCall" : None, "PlayerCount": 0, "enterRoomReqs" : [], "roomKey" : self.lastNewRoomKey}
 			self.rooms[self.lastNewRoomKey] = roomDatas
 			return roomDatas
 
 		return roomDatas
 
-	def enterRoom(self, entityMailbox, position, direction, roomKey):
+	def enterRoom(self, entityCall, position, direction, roomKey):
 		"""
 		defined method.
 		请求进入某个Room中
@@ -65,12 +65,12 @@ class Halls(KBEngine.Base):
 
 		roomDatas["PlayerCount"] += 1
 		
-		roomMailbox = roomDatas["roomMailbox"]
-		if roomMailbox is not None:
-			roomMailbox.enterRoom(entityMailbox, position, direction)
+		roomEntityCall = roomDatas["roomEntityCall"]
+		if roomEntityCall is not None:
+			roomEntityCall.enterRoom(entityCall, position, direction)
 		else:
-			DEBUG_MSG("Halls::enterRoom: space %i creating..., enter entityID=%i" % (roomDatas["roomKey"], entityMailbox.id))
-			roomDatas["enterRoomReqs"].append((entityMailbox, position, direction))
+			DEBUG_MSG("Halls::enterRoom: space %i creating..., enter entityID=%i" % (roomDatas["roomKey"], entityCall.id))
+			roomDatas["enterRoomReqs"].append((entityCall, position, direction))
 
 	def leaveRoom(self, avatarID, roomKey):
 		"""
@@ -80,9 +80,9 @@ class Halls(KBEngine.Base):
 		roomDatas = self.findRoom(roomKey, False)
 
 		if type(roomDatas) is dict:
-			roomMailbox = roomDatas["roomMailbox"]
-			if roomMailbox:
-				roomMailbox.leaveRoom(avatarID)
+			roomEntityCall = roomDatas["roomEntityCall"]
+			if roomEntityCall:
+				roomEntityCall.leaveRoom(avatarID)
 		else:
 			# 由于玩家即使是掉线都会缓存至少一局游戏， 因此应该不存在退出房间期间地图正常创建中
 			if roomDatas == FIND_ROOM_CREATING:
@@ -91,11 +91,11 @@ class Halls(KBEngine.Base):
 	#--------------------------------------------------------------------------------------------
 	#                              Callbacks
 	#--------------------------------------------------------------------------------------------
-	def onRoomCreatedCB(self, roomKey, roomMailbox):
+	def onRoomCreatedCB(self, roomKey, roomEntityCall):
 		"""
 		一个space创建好后的回调
 		"""
-		DEBUG_MSG("Halls::onRoomCreatedCB: space %i. entityID=%i" % (roomKey, roomMailbox.id))
+		DEBUG_MSG("Halls::onRoomCreatedCB: space %i. entityID=%i" % (roomKey, roomEntityCall.id))
 
 	def onTimer(self, tid, userArg):
 		"""
@@ -113,16 +113,16 @@ class Halls(KBEngine.Base):
 		DEBUG_MSG("Halls::onRoomLoseCell: space %i." % (roomKey))
 		del self.rooms[roomKey]
 
-	def onRoomGetCell(self, roomMailbox, roomKey):
+	def onRoomGetCell(self, roomEntityCall, roomKey):
 		"""
 		defined method.
 		Room的cell创建好了
 		"""
-		self.rooms[roomKey]["roomMailbox"] = roomMailbox
+		self.rooms[roomKey]["roomEntityCall"] = roomEntityCall
 
 		# space已经创建好了， 现在可以将之前请求进入的玩家全部丢到cell地图中
 		for infos in self.rooms[roomKey]["enterRoomReqs"]:
-			entityMailbox = infos[0]
-			entityMailbox.createCell(roomMailbox.cell)
+			entityCall = infos[0]
+			entityCall.createCell(roomEntityCall.cell)
 			
 		self.rooms[roomKey]["enterRoomReqs"] = []

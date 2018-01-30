@@ -19,7 +19,7 @@ def onBaseAppReady(isBootstrap):
 	
 	if isBootstrap:
 		# 创建大厅
-		KBEngine.createBaseLocally( "Halls", {} )
+		KBEngine.createEntityLocally( "Halls", {} )
 
 def onReadyForLogin(isBootstrap):
 	"""
