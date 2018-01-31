@@ -22,7 +22,7 @@ class Avatar(KBEngine.Entity, EntityCommon):
 		self.getCurrRoom().onEnter(self)
 		
 		# 可视范围起始位30米，后期根据长大尺寸调整
-		self.setAoiRadius(30.0, 1.0)
+		self.setViewRadius(30.0, 1.0)
 		
 		# 默认开始的尺寸
 		self.modelRadius = 0.5
