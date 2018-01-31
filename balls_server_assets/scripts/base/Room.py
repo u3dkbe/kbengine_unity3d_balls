@@ -16,7 +16,7 @@ class Room(KBEngine.Entity):
 		self.cellData["roomKeyC"] = self.roomKey
 		
 		# 请求在cellapp上创建cell空间
-		self.createInNewSpace(None)
+		self.createCellEntityInNewSpace(None)
 		
 		self.avatars = {}
 
