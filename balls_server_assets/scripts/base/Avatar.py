@@ -21,11 +21,12 @@ class Avatar(KBEngine.Proxy):
 
 		self._destroyTimer = 0
 		
-	def createCell(self, space):
+	def createCell(self, space, roomKey):
 		"""
 		defined method.
 		创建cell实体
 		"""
+		self.roomKey = roomKey
 		self.createCellEntity(space)
 	
 	def destroySelf(self):

@@ -25,7 +25,7 @@ class Room(KBEngine.Entity):
 		defined method.
 		请求进入某个space中
 		"""
-		entityCall.createCell(self.cell)
+		entityCall.createCell(self.cell, self.roomKey)
 		self.onEnter(entityCall)
 
 	def leaveRoom(self, entityID):
