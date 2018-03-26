@@ -61,6 +61,7 @@
 	<BaseMethods>
 		<createCell>
 			<Arg>		ENTITYCALL					</Arg>
+			<Arg>		SPACE_KEY					</Arg>
 		</createCell>
 	</BaseMethods>
 
