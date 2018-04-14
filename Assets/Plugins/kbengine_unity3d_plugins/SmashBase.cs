@@ -13,6 +13,7 @@ namespace KBEngine
 	using System.Collections.Generic;
 
 	// defined in */scripts/entity_defs/Smash.def
+	// Please inherit and implement "class Smash : SmashBase"
 	public abstract class SmashBase : Entity
 	{
 		public EntityBaseEntityCall_SmashBase baseEntityCall = null;
@@ -24,18 +25,18 @@ namespace KBEngine
 		public virtual void onModelScaleChanged(float oldValue) {}
 
 
+		public SmashBase()
+		{
+		}
+
 		public override void onGetBase()
 		{
-			baseEntityCall = new EntityBaseEntityCall_SmashBase();
-			baseEntityCall.id = id;
-			baseEntityCall.className = className;
+			baseEntityCall = new EntityBaseEntityCall_SmashBase(id, className);
 		}
 
 		public override void onGetCell()
 		{
-			cellEntityCall = new EntityCellEntityCall_SmashBase();
-			cellEntityCall.id = id;
-			cellEntityCall.className = className;
+			cellEntityCall = new EntityCellEntityCall_SmashBase(id, className);
 		}
 
 		public override void onLoseCell()
@@ -53,8 +54,42 @@ namespace KBEngine
 			return cellEntityCall;
 		}
 
-		public override void onRemoteMethodCall(Method method, MemoryStream stream)
+		public override void onRemoteMethodCall(MemoryStream stream)
 		{
+			ScriptModule sm = EntityDef.moduledefs["Smash"];
+
+			UInt16 methodUtype = 0;
+			UInt16 componentPropertyUType = 0;
+
+			if(sm.useMethodDescrAlias)
+			{
+				componentPropertyUType = stream.readUint8();
+				methodUtype = stream.readUint8();
+			}
+			else
+			{
+				componentPropertyUType = stream.readUint16();
+				methodUtype = stream.readUint16();
+			}
+
+			Method method = null;
+
+			if(componentPropertyUType == 0)
+			{
+				method = sm.idmethods[methodUtype];
+			}
+			else
+			{
+				Property pComponentPropertyDescription = sm.idpropertys[componentPropertyUType];
+				switch(pComponentPropertyDescription.properUtype)
+				{
+					default:
+						break;
+				}
+
+				return;
+			}
+
 			switch(method.methodUtype)
 			{
 				default:
@@ -62,89 +97,129 @@ namespace KBEngine
 			};
 		}
 
-		public override void onUpdatePropertys(Property prop, MemoryStream stream)
+		public override void onUpdatePropertys(MemoryStream stream)
 		{
-			switch(prop.properUtype)
+			ScriptModule sm = EntityDef.moduledefs["Smash"];
+			Dictionary<UInt16, Property> pdatas = sm.idpropertys;
+
+			while(stream.length() > 0)
 			{
-				case 40001:
-					Vector3 oldval_direction = direction;
-					direction = stream.readVector3();
+				UInt16 _t_utype = 0;
+				UInt16 _t_child_utype = 0;
 
-					if(prop.isBase())
+				{
+					if(sm.usePropertyDescrAlias)
 					{
-						if(inited)
-							onDirectionChanged(oldval_direction);
+						_t_utype = stream.readUint8();
+						_t_child_utype = stream.readUint8();
 					}
 					else
 					{
-						if(inWorld)
-							onDirectionChanged(oldval_direction);
+						_t_utype = stream.readUint16();
+						_t_child_utype = stream.readUint16();
 					}
+				}
 
-					break;
-				case 17:
-					Byte oldval_modelID = modelID;
-					modelID = stream.readUint8();
+				Property prop = null;
 
-					if(prop.isBase())
+				if(_t_utype == 0)
+				{
+					prop = pdatas[_t_child_utype];
+				}
+				else
+				{
+					Property pComponentPropertyDescription = pdatas[_t_utype];
+					switch(pComponentPropertyDescription.properUtype)
 					{
-						if(inited)
-							onModelIDChanged(oldval_modelID);
-					}
-					else
-					{
-						if(inWorld)
-							onModelIDChanged(oldval_modelID);
+						default:
+							break;
 					}
 
-					break;
-				case 16:
-					float oldval_modelScale = modelScale;
-					modelScale = stream.readFloat();
+					return;
+				}
 
-					if(prop.isBase())
-					{
-						if(inited)
-							onModelScaleChanged(oldval_modelScale);
-					}
-					else
-					{
-						if(inWorld)
-							onModelScaleChanged(oldval_modelScale);
-					}
+				switch(prop.properUtype)
+				{
+					case 40001:
+						Vector3 oldval_direction = direction;
+						direction = stream.readVector3();
 
-					break;
-				case 40000:
-					Vector3 oldval_position = position;
-					position = stream.readVector3();
+						if(prop.isBase())
+						{
+							if(inited)
+								onDirectionChanged(oldval_direction);
+						}
+						else
+						{
+							if(inWorld)
+								onDirectionChanged(oldval_direction);
+						}
 
-					if(prop.isBase())
-					{
-						if(inited)
-							onPositionChanged(oldval_position);
-					}
-					else
-					{
-						if(inWorld)
-							onPositionChanged(oldval_position);
-					}
+						break;
+					case 17:
+						Byte oldval_modelID = modelID;
+						modelID = stream.readUint8();
 
-					break;
+						if(prop.isBase())
+						{
+							if(inited)
+								onModelIDChanged(oldval_modelID);
+						}
+						else
+						{
+							if(inWorld)
+								onModelIDChanged(oldval_modelID);
+						}
+
+						break;
+					case 16:
+						float oldval_modelScale = modelScale;
+						modelScale = stream.readFloat();
+
+						if(prop.isBase())
+						{
+							if(inited)
+								onModelScaleChanged(oldval_modelScale);
+						}
+						else
+						{
+							if(inWorld)
+								onModelScaleChanged(oldval_modelScale);
+						}
+
+						break;
+					case 40000:
+						Vector3 oldval_position = position;
+						position = stream.readVector3();
+
+						if(prop.isBase())
+						{
+							if(inited)
+								onPositionChanged(oldval_position);
+						}
+						else
+						{
+							if(inWorld)
+								onPositionChanged(oldval_position);
+						}
+
+						break;
 					case 40002:
 						stream.readUint32();
 						break;
-				default:
-					break;
-			};
+					default:
+						break;
+				};
+			}
 		}
 
 		public override void callPropertysSetMethods()
 		{
-			ScriptModule sm = EntityDef.moduledefs[className];
+			ScriptModule sm = EntityDef.moduledefs["Smash"];
 			Dictionary<UInt16, Property> pdatas = sm.idpropertys;
 
 			Vector3 oldval_direction = direction;
-			Property prop_direction = pdatas[1];
+			Property prop_direction = pdatas[2];
 			if(prop_direction.isBase())
 			{
 				if(inited && !inWorld)
@@ -165,7 +240,7 @@ namespace KBEngine
 			}
 
 			Byte oldval_modelID = modelID;
-			Property prop_modelID = pdatas[3];
+			Property prop_modelID = pdatas[4];
 			if(prop_modelID.isBase())
 			{
 				if(inited && !inWorld)
@@ -186,7 +261,7 @@ namespace KBEngine
 			}
 
 			float oldval_modelScale = modelScale;
-			Property prop_modelScale = pdatas[4];
+			Property prop_modelScale = pdatas[5];
 			if(prop_modelScale.isBase())
 			{
 				if(inited && !inWorld)
@@ -207,7 +282,7 @@ namespace KBEngine
 			}
 
 			Vector3 oldval_position = position;
-			Property prop_position = pdatas[0];
+			Property prop_position = pdatas[1];
 			if(prop_position.isBase())
 			{
 				if(inited && !inWorld)

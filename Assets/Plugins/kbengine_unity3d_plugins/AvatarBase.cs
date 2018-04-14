@@ -13,6 +13,7 @@ namespace KBEngine
 	using System.Collections.Generic;
 
 	// defined in */scripts/entity_defs/Avatar.def
+	// Please inherit and implement "class Avatar : AvatarBase"
 	public abstract class AvatarBase : Entity
 	{
 		public EntityBaseEntityCall_AvatarBase baseEntityCall = null;
@@ -34,18 +35,18 @@ namespace KBEngine
 		public virtual void onStateChanged(SByte oldValue) {}
 
 
+		public AvatarBase()
+		{
+		}
+
 		public override void onGetBase()
 		{
-			baseEntityCall = new EntityBaseEntityCall_AvatarBase();
-			baseEntityCall.id = id;
-			baseEntityCall.className = className;
+			baseEntityCall = new EntityBaseEntityCall_AvatarBase(id, className);
 		}
 
 		public override void onGetCell()
 		{
-			cellEntityCall = new EntityCellEntityCall_AvatarBase();
-			cellEntityCall.id = id;
-			cellEntityCall.className = className;
+			cellEntityCall = new EntityCellEntityCall_AvatarBase(id, className);
 		}
 
 		public override void onLoseCell()
@@ -63,8 +64,42 @@ namespace KBEngine
 			return cellEntityCall;
 		}
 
-		public override void onRemoteMethodCall(Method method, MemoryStream stream)
+		public override void onRemoteMethodCall(MemoryStream stream)
 		{
+			ScriptModule sm = EntityDef.moduledefs["Avatar"];
+
+			UInt16 methodUtype = 0;
+			UInt16 componentPropertyUType = 0;
+
+			if(sm.useMethodDescrAlias)
+			{
+				componentPropertyUType = stream.readUint8();
+				methodUtype = stream.readUint8();
+			}
+			else
+			{
+				componentPropertyUType = stream.readUint16();
+				methodUtype = stream.readUint16();
+			}
+
+			Method method = null;
+
+			if(componentPropertyUType == 0)
+			{
+				method = sm.idmethods[methodUtype];
+			}
+			else
+			{
+				Property pComponentPropertyDescription = sm.idpropertys[componentPropertyUType];
+				switch(pComponentPropertyDescription.properUtype)
+				{
+					default:
+						break;
+				}
+
+				return;
+			}
+
 			switch(method.methodUtype)
 			{
 				default:
@@ -72,169 +107,209 @@ namespace KBEngine
 			};
 		}
 
-		public override void onUpdatePropertys(Property prop, MemoryStream stream)
+		public override void onUpdatePropertys(MemoryStream stream)
 		{
-			switch(prop.properUtype)
+			ScriptModule sm = EntityDef.moduledefs["Avatar"];
+			Dictionary<UInt16, Property> pdatas = sm.idpropertys;
+
+			while(stream.length() > 0)
 			{
-				case 40001:
-					Vector3 oldval_direction = direction;
-					direction = stream.readVector3();
+				UInt16 _t_utype = 0;
+				UInt16 _t_child_utype = 0;
 
-					if(prop.isBase())
+				{
+					if(sm.usePropertyDescrAlias)
 					{
-						if(inited)
-							onDirectionChanged(oldval_direction);
+						_t_utype = stream.readUint8();
+						_t_child_utype = stream.readUint8();
 					}
 					else
 					{
-						if(inWorld)
-							onDirectionChanged(oldval_direction);
+						_t_utype = stream.readUint16();
+						_t_child_utype = stream.readUint16();
 					}
+				}
 
-					break;
-				case 5:
-					Byte oldval_level = level;
-					level = stream.readUint8();
+				Property prop = null;
 
-					if(prop.isBase())
+				if(_t_utype == 0)
+				{
+					prop = pdatas[_t_child_utype];
+				}
+				else
+				{
+					Property pComponentPropertyDescription = pdatas[_t_utype];
+					switch(pComponentPropertyDescription.properUtype)
 					{
-						if(inited)
-							onLevelChanged(oldval_level);
-					}
-					else
-					{
-						if(inWorld)
-							onLevelChanged(oldval_level);
+						default:
+							break;
 					}
 
-					break;
-				case 4:
-					Int32 oldval_mass = mass;
-					mass = stream.readInt32();
+					return;
+				}
 
-					if(prop.isBase())
-					{
-						if(inited)
-							onMassChanged(oldval_mass);
-					}
-					else
-					{
-						if(inWorld)
-							onMassChanged(oldval_mass);
-					}
+				switch(prop.properUtype)
+				{
+					case 40001:
+						Vector3 oldval_direction = direction;
+						direction = stream.readVector3();
 
-					break;
-				case 9:
-					Byte oldval_modelID = modelID;
-					modelID = stream.readUint8();
+						if(prop.isBase())
+						{
+							if(inited)
+								onDirectionChanged(oldval_direction);
+						}
+						else
+						{
+							if(inWorld)
+								onDirectionChanged(oldval_direction);
+						}
 
-					if(prop.isBase())
-					{
-						if(inited)
-							onModelIDChanged(oldval_modelID);
-					}
-					else
-					{
-						if(inWorld)
-							onModelIDChanged(oldval_modelID);
-					}
+						break;
+					case 5:
+						Byte oldval_level = level;
+						level = stream.readUint8();
 
-					break;
-				case 7:
-					float oldval_modelScale = modelScale;
-					modelScale = stream.readFloat();
+						if(prop.isBase())
+						{
+							if(inited)
+								onLevelChanged(oldval_level);
+						}
+						else
+						{
+							if(inWorld)
+								onLevelChanged(oldval_level);
+						}
 
-					if(prop.isBase())
-					{
-						if(inited)
-							onModelScaleChanged(oldval_modelScale);
-					}
-					else
-					{
-						if(inWorld)
-							onModelScaleChanged(oldval_modelScale);
-					}
+						break;
+					case 4:
+						Int32 oldval_mass = mass;
+						mass = stream.readInt32();
 
-					break;
-				case 6:
-					float oldval_moveSpeed = moveSpeed;
-					moveSpeed = stream.readFloat();
+						if(prop.isBase())
+						{
+							if(inited)
+								onMassChanged(oldval_mass);
+						}
+						else
+						{
+							if(inWorld)
+								onMassChanged(oldval_mass);
+						}
 
-					if(prop.isBase())
-					{
-						if(inited)
-							onMoveSpeedChanged(oldval_moveSpeed);
-					}
-					else
-					{
-						if(inWorld)
-							onMoveSpeedChanged(oldval_moveSpeed);
-					}
+						break;
+					case 9:
+						Byte oldval_modelID = modelID;
+						modelID = stream.readUint8();
 
-					break;
-				case 2:
-					string oldval_name = name;
-					name = stream.readUnicode();
+						if(prop.isBase())
+						{
+							if(inited)
+								onModelIDChanged(oldval_modelID);
+						}
+						else
+						{
+							if(inWorld)
+								onModelIDChanged(oldval_modelID);
+						}
 
-					if(prop.isBase())
-					{
-						if(inited)
-							onNameChanged(oldval_name);
-					}
-					else
-					{
-						if(inWorld)
-							onNameChanged(oldval_name);
-					}
+						break;
+					case 7:
+						float oldval_modelScale = modelScale;
+						modelScale = stream.readFloat();
 
-					break;
-				case 40000:
-					Vector3 oldval_position = position;
-					position = stream.readVector3();
+						if(prop.isBase())
+						{
+							if(inited)
+								onModelScaleChanged(oldval_modelScale);
+						}
+						else
+						{
+							if(inWorld)
+								onModelScaleChanged(oldval_modelScale);
+						}
 
-					if(prop.isBase())
-					{
-						if(inited)
-							onPositionChanged(oldval_position);
-					}
-					else
-					{
-						if(inWorld)
-							onPositionChanged(oldval_position);
-					}
+						break;
+					case 6:
+						float oldval_moveSpeed = moveSpeed;
+						moveSpeed = stream.readFloat();
 
-					break;
+						if(prop.isBase())
+						{
+							if(inited)
+								onMoveSpeedChanged(oldval_moveSpeed);
+						}
+						else
+						{
+							if(inWorld)
+								onMoveSpeedChanged(oldval_moveSpeed);
+						}
+
+						break;
+					case 2:
+						string oldval_name = name;
+						name = stream.readUnicode();
+
+						if(prop.isBase())
+						{
+							if(inited)
+								onNameChanged(oldval_name);
+						}
+						else
+						{
+							if(inWorld)
+								onNameChanged(oldval_name);
+						}
+
+						break;
+					case 40000:
+						Vector3 oldval_position = position;
+						position = stream.readVector3();
+
+						if(prop.isBase())
+						{
+							if(inited)
+								onPositionChanged(oldval_position);
+						}
+						else
+						{
+							if(inWorld)
+								onPositionChanged(oldval_position);
+						}
+
+						break;
 					case 40002:
 						stream.readUint32();
 						break;
-				case 8:
-					SByte oldval_state = state;
-					state = stream.readInt8();
+					case 8:
+						SByte oldval_state = state;
+						state = stream.readInt8();
 
-					if(prop.isBase())
-					{
-						if(inited)
-							onStateChanged(oldval_state);
-					}
-					else
-					{
-						if(inWorld)
-							onStateChanged(oldval_state);
-					}
+						if(prop.isBase())
+						{
+							if(inited)
+								onStateChanged(oldval_state);
+						}
+						else
+						{
+							if(inWorld)
+								onStateChanged(oldval_state);
+						}
 
-					break;
-				default:
-					break;
-			};
+						break;
+					default:
+						break;
+				};
+			}
 		}
 
 		public override void callPropertysSetMethods()
 		{
-			ScriptModule sm = EntityDef.moduledefs[className];
+			ScriptModule sm = EntityDef.moduledefs["Avatar"];
 			Dictionary<UInt16, Property> pdatas = sm.idpropertys;
 
 			Vector3 oldval_direction = direction;
-			Property prop_direction = pdatas[1];
+			Property prop_direction = pdatas[2];
 			if(prop_direction.isBase())
 			{
 				if(inited && !inWorld)
@@ -255,7 +330,7 @@ namespace KBEngine
 			}
 
 			Byte oldval_level = level;
-			Property prop_level = pdatas[3];
+			Property prop_level = pdatas[4];
 			if(prop_level.isBase())
 			{
 				if(inited && !inWorld)
@@ -276,7 +351,7 @@ namespace KBEngine
 			}
 
 			Int32 oldval_mass = mass;
-			Property prop_mass = pdatas[4];
+			Property prop_mass = pdatas[5];
 			if(prop_mass.isBase())
 			{
 				if(inited && !inWorld)
@@ -297,7 +372,7 @@ namespace KBEngine
 			}
 
 			Byte oldval_modelID = modelID;
-			Property prop_modelID = pdatas[5];
+			Property prop_modelID = pdatas[6];
 			if(prop_modelID.isBase())
 			{
 				if(inited && !inWorld)
@@ -318,7 +393,7 @@ namespace KBEngine
 			}
 
 			float oldval_modelScale = modelScale;
-			Property prop_modelScale = pdatas[6];
+			Property prop_modelScale = pdatas[7];
 			if(prop_modelScale.isBase())
 			{
 				if(inited && !inWorld)
@@ -339,7 +414,7 @@ namespace KBEngine
 			}
 
 			float oldval_moveSpeed = moveSpeed;
-			Property prop_moveSpeed = pdatas[7];
+			Property prop_moveSpeed = pdatas[8];
 			if(prop_moveSpeed.isBase())
 			{
 				if(inited && !inWorld)
@@ -360,7 +435,7 @@ namespace KBEngine
 			}
 
 			string oldval_name = name;
-			Property prop_name = pdatas[8];
+			Property prop_name = pdatas[9];
 			if(prop_name.isBase())
 			{
 				if(inited && !inWorld)
@@ -381,7 +456,7 @@ namespace KBEngine
 			}
 
 			Vector3 oldval_position = position;
-			Property prop_position = pdatas[0];
+			Property prop_position = pdatas[1];
 			if(prop_position.isBase())
 			{
 				if(inited && !inWorld)
@@ -402,7 +477,7 @@ namespace KBEngine
 			}
 
 			SByte oldval_state = state;
-			Property prop_state = pdatas[9];
+			Property prop_state = pdatas[10];
 			if(prop_state.isBase())
 			{
 				if(inited && !inWorld)

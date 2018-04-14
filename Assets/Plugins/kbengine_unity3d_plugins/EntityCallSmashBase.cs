@@ -15,7 +15,8 @@ namespace KBEngine
 	// defined in */scripts/entity_defs/Smash.def
 	public class EntityBaseEntityCall_SmashBase : EntityCall
 	{
-		public EntityBaseEntityCall_SmashBase() : base()
+
+		public EntityBaseEntityCall_SmashBase(Int32 eid, string ename) : base(eid, ename)
 		{
 			type = ENTITYCALL_TYPE.ENTITYCALL_TYPE_BASE;
 		}
@@ -24,7 +25,8 @@ namespace KBEngine
 
 	public class EntityCellEntityCall_SmashBase : EntityCall
 	{
-		public EntityCellEntityCall_SmashBase() : base()
+
+		public EntityCellEntityCall_SmashBase(Int32 eid, string ename) : base(eid, ename)
 		{
 			type = ENTITYCALL_TYPE.ENTITYCALL_TYPE_CELL;
 		}

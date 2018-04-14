@@ -83,7 +83,7 @@ namespace KBEngine
 			pAvatar_position.name = "position";
 			pAvatar_position.properUtype = 40000;
 			pAvatar_position.properFlags = 4;
-			pAvatar_position.aliasID = 0;
+			pAvatar_position.aliasID = 1;
 			Vector3 Avatar_position_defval = new Vector3();
 			pAvatar_position.defaultVal = Avatar_position_defval;
 			pAvatarModule.propertys["position"] = pAvatar_position; 
@@ -97,7 +97,7 @@ namespace KBEngine
 			pAvatar_direction.name = "direction";
 			pAvatar_direction.properUtype = 40001;
 			pAvatar_direction.properFlags = 4;
-			pAvatar_direction.aliasID = 1;
+			pAvatar_direction.aliasID = 2;
 			Vector3 Avatar_direction_defval = new Vector3();
 			pAvatar_direction.defaultVal = Avatar_direction_defval;
 			pAvatarModule.propertys["direction"] = pAvatar_direction; 
@@ -111,7 +111,7 @@ namespace KBEngine
 			pAvatar_spaceID.name = "spaceID";
 			pAvatar_spaceID.properUtype = 40002;
 			pAvatar_spaceID.properFlags = 16;
-			pAvatar_spaceID.aliasID = 2;
+			pAvatar_spaceID.aliasID = 3;
 			UInt32 Avatar_spaceID_defval;
 			UInt32.TryParse("", out Avatar_spaceID_defval);
 			pAvatar_spaceID.defaultVal = Avatar_spaceID_defval;
@@ -126,7 +126,7 @@ namespace KBEngine
 			pAvatar_level.name = "level";
 			pAvatar_level.properUtype = 5;
 			pAvatar_level.properFlags = 16;
-			pAvatar_level.aliasID = 3;
+			pAvatar_level.aliasID = 4;
 			Byte Avatar_level_defval;
 			Byte.TryParse("1", out Avatar_level_defval);
 			pAvatar_level.defaultVal = Avatar_level_defval;
@@ -141,7 +141,7 @@ namespace KBEngine
 			pAvatar_mass.name = "mass";
 			pAvatar_mass.properUtype = 4;
 			pAvatar_mass.properFlags = 16;
-			pAvatar_mass.aliasID = 4;
+			pAvatar_mass.aliasID = 5;
 			Int32 Avatar_mass_defval;
 			Int32.TryParse("10", out Avatar_mass_defval);
 			pAvatar_mass.defaultVal = Avatar_mass_defval;
@@ -156,7 +156,7 @@ namespace KBEngine
 			pAvatar_modelID.name = "modelID";
 			pAvatar_modelID.properUtype = 9;
 			pAvatar_modelID.properFlags = 4;
-			pAvatar_modelID.aliasID = 5;
+			pAvatar_modelID.aliasID = 6;
 			Byte Avatar_modelID_defval;
 			Byte.TryParse("0", out Avatar_modelID_defval);
 			pAvatar_modelID.defaultVal = Avatar_modelID_defval;
@@ -171,7 +171,7 @@ namespace KBEngine
 			pAvatar_modelScale.name = "modelScale";
 			pAvatar_modelScale.properUtype = 7;
 			pAvatar_modelScale.properFlags = 4;
-			pAvatar_modelScale.aliasID = 6;
+			pAvatar_modelScale.aliasID = 7;
 			float Avatar_modelScale_defval;
 			float.TryParse("0.3", out Avatar_modelScale_defval);
 			pAvatar_modelScale.defaultVal = Avatar_modelScale_defval;
@@ -186,7 +186,7 @@ namespace KBEngine
 			pAvatar_moveSpeed.name = "moveSpeed";
 			pAvatar_moveSpeed.properUtype = 6;
 			pAvatar_moveSpeed.properFlags = 4;
-			pAvatar_moveSpeed.aliasID = 7;
+			pAvatar_moveSpeed.aliasID = 8;
 			float Avatar_moveSpeed_defval;
 			float.TryParse("6.5", out Avatar_moveSpeed_defval);
 			pAvatar_moveSpeed.defaultVal = Avatar_moveSpeed_defval;
@@ -201,7 +201,7 @@ namespace KBEngine
 			pAvatar_name.name = "name";
 			pAvatar_name.properUtype = 2;
 			pAvatar_name.properFlags = 4;
-			pAvatar_name.aliasID = 8;
+			pAvatar_name.aliasID = 9;
 			string Avatar_name_defval = "";
 			pAvatar_name.defaultVal = Avatar_name_defval;
 			pAvatarModule.propertys["name"] = pAvatar_name; 
@@ -215,7 +215,7 @@ namespace KBEngine
 			pAvatar_state.name = "state";
 			pAvatar_state.properUtype = 8;
 			pAvatar_state.properFlags = 4;
-			pAvatar_state.aliasID = 9;
+			pAvatar_state.aliasID = 10;
 			SByte Avatar_state_defval;
 			SByte.TryParse("0", out Avatar_state_defval);
 			pAvatar_state.defaultVal = Avatar_state_defval;
@@ -234,7 +234,7 @@ namespace KBEngine
 			pFood_position.name = "position";
 			pFood_position.properUtype = 40000;
 			pFood_position.properFlags = 4;
-			pFood_position.aliasID = 0;
+			pFood_position.aliasID = 1;
 			Vector3 Food_position_defval = new Vector3();
 			pFood_position.defaultVal = Food_position_defval;
 			pFoodModule.propertys["position"] = pFood_position; 
@@ -248,7 +248,7 @@ namespace KBEngine
 			pFood_direction.name = "direction";
 			pFood_direction.properUtype = 40001;
 			pFood_direction.properFlags = 4;
-			pFood_direction.aliasID = 1;
+			pFood_direction.aliasID = 2;
 			Vector3 Food_direction_defval = new Vector3();
 			pFood_direction.defaultVal = Food_direction_defval;
 			pFoodModule.propertys["direction"] = pFood_direction; 
@@ -262,7 +262,7 @@ namespace KBEngine
 			pFood_spaceID.name = "spaceID";
 			pFood_spaceID.properUtype = 40002;
 			pFood_spaceID.properFlags = 16;
-			pFood_spaceID.aliasID = 2;
+			pFood_spaceID.aliasID = 3;
 			UInt32 Food_spaceID_defval;
 			UInt32.TryParse("", out Food_spaceID_defval);
 			pFood_spaceID.defaultVal = Food_spaceID_defval;
@@ -277,7 +277,7 @@ namespace KBEngine
 			pFood_modelID.name = "modelID";
 			pFood_modelID.properUtype = 14;
 			pFood_modelID.properFlags = 4;
-			pFood_modelID.aliasID = 3;
+			pFood_modelID.aliasID = 4;
 			Byte Food_modelID_defval;
 			Byte.TryParse("0", out Food_modelID_defval);
 			pFood_modelID.defaultVal = Food_modelID_defval;
@@ -296,7 +296,7 @@ namespace KBEngine
 			pSmash_position.name = "position";
 			pSmash_position.properUtype = 40000;
 			pSmash_position.properFlags = 4;
-			pSmash_position.aliasID = 0;
+			pSmash_position.aliasID = 1;
 			Vector3 Smash_position_defval = new Vector3();
 			pSmash_position.defaultVal = Smash_position_defval;
 			pSmashModule.propertys["position"] = pSmash_position; 
@@ -310,7 +310,7 @@ namespace KBEngine
 			pSmash_direction.name = "direction";
 			pSmash_direction.properUtype = 40001;
 			pSmash_direction.properFlags = 4;
-			pSmash_direction.aliasID = 1;
+			pSmash_direction.aliasID = 2;
 			Vector3 Smash_direction_defval = new Vector3();
 			pSmash_direction.defaultVal = Smash_direction_defval;
 			pSmashModule.propertys["direction"] = pSmash_direction; 
@@ -324,7 +324,7 @@ namespace KBEngine
 			pSmash_spaceID.name = "spaceID";
 			pSmash_spaceID.properUtype = 40002;
 			pSmash_spaceID.properFlags = 16;
-			pSmash_spaceID.aliasID = 2;
+			pSmash_spaceID.aliasID = 3;
 			UInt32 Smash_spaceID_defval;
 			UInt32.TryParse("", out Smash_spaceID_defval);
 			pSmash_spaceID.defaultVal = Smash_spaceID_defval;
@@ -339,7 +339,7 @@ namespace KBEngine
 			pSmash_modelID.name = "modelID";
 			pSmash_modelID.properUtype = 17;
 			pSmash_modelID.properFlags = 4;
-			pSmash_modelID.aliasID = 3;
+			pSmash_modelID.aliasID = 4;
 			Byte Smash_modelID_defval;
 			Byte.TryParse("0", out Smash_modelID_defval);
 			pSmash_modelID.defaultVal = Smash_modelID_defval;
@@ -354,7 +354,7 @@ namespace KBEngine
 			pSmash_modelScale.name = "modelScale";
 			pSmash_modelScale.properUtype = 16;
 			pSmash_modelScale.properFlags = 4;
-			pSmash_modelScale.aliasID = 4;
+			pSmash_modelScale.aliasID = 5;
 			float Smash_modelScale_defval;
 			float.TryParse("1.0", out Smash_modelScale_defval);
 			pSmash_modelScale.defaultVal = Smash_modelScale_defval;

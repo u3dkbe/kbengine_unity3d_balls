@@ -15,7 +15,8 @@ namespace KBEngine
 	// defined in */scripts/entity_defs/Halls.def
 	public class EntityBaseEntityCall_HallsBase : EntityCall
 	{
-		public EntityBaseEntityCall_HallsBase() : base()
+
+		public EntityBaseEntityCall_HallsBase(Int32 eid, string ename) : base(eid, ename)
 		{
 			type = ENTITYCALL_TYPE.ENTITYCALL_TYPE_BASE;
 		}
@@ -24,7 +25,8 @@ namespace KBEngine
 
 	public class EntityCellEntityCall_HallsBase : EntityCall
 	{
-		public EntityCellEntityCall_HallsBase() : base()
+
+		public EntityCellEntityCall_HallsBase(Int32 eid, string ename) : base(eid, ename)
 		{
 			type = ENTITYCALL_TYPE.ENTITYCALL_TYPE_CELL;
 		}

@@ -13,6 +13,7 @@ namespace KBEngine
 	using System.Collections.Generic;
 
 	// defined in */scripts/entity_defs/Halls.def
+	// Please inherit and implement "class Halls : HallsBase"
 	public abstract class HallsBase : Entity
 	{
 		public EntityBaseEntityCall_HallsBase baseEntityCall = null;
@@ -20,18 +21,18 @@ namespace KBEngine
 
 
 
+		public HallsBase()
+		{
+		}
+
 		public override void onGetBase()
 		{
-			baseEntityCall = new EntityBaseEntityCall_HallsBase();
-			baseEntityCall.id = id;
-			baseEntityCall.className = className;
+			baseEntityCall = new EntityBaseEntityCall_HallsBase(id, className);
 		}
 
 		public override void onGetCell()
 		{
-			cellEntityCall = new EntityCellEntityCall_HallsBase();
-			cellEntityCall.id = id;
-			cellEntityCall.className = className;
+			cellEntityCall = new EntityCellEntityCall_HallsBase(id, className);
 		}
 
 		public override void onLoseCell()
@@ -49,8 +50,42 @@ namespace KBEngine
 			return cellEntityCall;
 		}
 
-		public override void onRemoteMethodCall(Method method, MemoryStream stream)
+		public override void onRemoteMethodCall(MemoryStream stream)
 		{
+			ScriptModule sm = EntityDef.moduledefs["Halls"];
+
+			UInt16 methodUtype = 0;
+			UInt16 componentPropertyUType = 0;
+
+			if(sm.useMethodDescrAlias)
+			{
+				componentPropertyUType = stream.readUint8();
+				methodUtype = stream.readUint8();
+			}
+			else
+			{
+				componentPropertyUType = stream.readUint16();
+				methodUtype = stream.readUint16();
+			}
+
+			Method method = null;
+
+			if(componentPropertyUType == 0)
+			{
+				method = sm.idmethods[methodUtype];
+			}
+			else
+			{
+				Property pComponentPropertyDescription = sm.idpropertys[componentPropertyUType];
+				switch(pComponentPropertyDescription.properUtype)
+				{
+					default:
+						break;
+				}
+
+				return;
+			}
+
 			switch(method.methodUtype)
 			{
 				default:
@@ -58,57 +93,97 @@ namespace KBEngine
 			};
 		}
 
-		public override void onUpdatePropertys(Property prop, MemoryStream stream)
+		public override void onUpdatePropertys(MemoryStream stream)
 		{
-			switch(prop.properUtype)
+			ScriptModule sm = EntityDef.moduledefs["Halls"];
+			Dictionary<UInt16, Property> pdatas = sm.idpropertys;
+
+			while(stream.length() > 0)
 			{
-				case 40001:
-					Vector3 oldval_direction = direction;
-					direction = stream.readVector3();
+				UInt16 _t_utype = 0;
+				UInt16 _t_child_utype = 0;
 
-					if(prop.isBase())
+				{
+					if(sm.usePropertyDescrAlias)
 					{
-						if(inited)
-							onDirectionChanged(oldval_direction);
+						_t_utype = stream.readUint8();
+						_t_child_utype = stream.readUint8();
 					}
 					else
 					{
-						if(inWorld)
-							onDirectionChanged(oldval_direction);
+						_t_utype = stream.readUint16();
+						_t_child_utype = stream.readUint16();
 					}
+				}
 
-					break;
-				case 40000:
-					Vector3 oldval_position = position;
-					position = stream.readVector3();
+				Property prop = null;
 
-					if(prop.isBase())
+				if(_t_utype == 0)
+				{
+					prop = pdatas[_t_child_utype];
+				}
+				else
+				{
+					Property pComponentPropertyDescription = pdatas[_t_utype];
+					switch(pComponentPropertyDescription.properUtype)
 					{
-						if(inited)
-							onPositionChanged(oldval_position);
-					}
-					else
-					{
-						if(inWorld)
-							onPositionChanged(oldval_position);
+						default:
+							break;
 					}
 
-					break;
+					return;
+				}
+
+				switch(prop.properUtype)
+				{
+					case 40001:
+						Vector3 oldval_direction = direction;
+						direction = stream.readVector3();
+
+						if(prop.isBase())
+						{
+							if(inited)
+								onDirectionChanged(oldval_direction);
+						}
+						else
+						{
+							if(inWorld)
+								onDirectionChanged(oldval_direction);
+						}
+
+						break;
+					case 40000:
+						Vector3 oldval_position = position;
+						position = stream.readVector3();
+
+						if(prop.isBase())
+						{
+							if(inited)
+								onPositionChanged(oldval_position);
+						}
+						else
+						{
+							if(inWorld)
+								onPositionChanged(oldval_position);
+						}
+
+						break;
 					case 40002:
 						stream.readUint32();
 						break;
-				default:
-					break;
-			};
+					default:
+						break;
+				};
+			}
 		}
 
 		public override void callPropertysSetMethods()
 		{
-			ScriptModule sm = EntityDef.moduledefs[className];
+			ScriptModule sm = EntityDef.moduledefs["Halls"];
 			Dictionary<UInt16, Property> pdatas = sm.idpropertys;
 
 			Vector3 oldval_direction = direction;
-			Property prop_direction = pdatas[1];
+			Property prop_direction = pdatas[2];
 			if(prop_direction.isBase())
 			{
 				if(inited && !inWorld)
@@ -129,7 +204,7 @@ namespace KBEngine
 			}
 
 			Vector3 oldval_position = position;
-			Property prop_position = pdatas[0];
+			Property prop_position = pdatas[1];
 			if(prop_position.isBase())
 			{
 				if(inited && !inWorld)

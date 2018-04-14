@@ -15,7 +15,8 @@ namespace KBEngine
 	// defined in */scripts/entity_defs/Food.def
 	public class EntityBaseEntityCall_FoodBase : EntityCall
 	{
-		public EntityBaseEntityCall_FoodBase() : base()
+
+		public EntityBaseEntityCall_FoodBase(Int32 eid, string ename) : base(eid, ename)
 		{
 			type = ENTITYCALL_TYPE.ENTITYCALL_TYPE_BASE;
 		}
@@ -24,7 +25,8 @@ namespace KBEngine
 
 	public class EntityCellEntityCall_FoodBase : EntityCall
 	{
-		public EntityCellEntityCall_FoodBase() : base()
+
+		public EntityCellEntityCall_FoodBase(Int32 eid, string ename) : base(eid, ename)
 		{
 			type = ENTITYCALL_TYPE.ENTITYCALL_TYPE_CELL;
 		}

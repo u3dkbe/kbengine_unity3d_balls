@@ -15,7 +15,8 @@ namespace KBEngine
 	// defined in */scripts/entity_defs/Room.def
 	public class EntityBaseEntityCall_RoomBase : EntityCall
 	{
-		public EntityBaseEntityCall_RoomBase() : base()
+
+		public EntityBaseEntityCall_RoomBase(Int32 eid, string ename) : base(eid, ename)
 		{
 			type = ENTITYCALL_TYPE.ENTITYCALL_TYPE_BASE;
 		}
@@ -24,7 +25,8 @@ namespace KBEngine
 
 	public class EntityCellEntityCall_RoomBase : EntityCall
 	{
-		public EntityCellEntityCall_RoomBase() : base()
+
+		public EntityCellEntityCall_RoomBase(Int32 eid, string ename) : base(eid, ename)
 		{
 			type = ENTITYCALL_TYPE.ENTITYCALL_TYPE_CELL;
 		}
