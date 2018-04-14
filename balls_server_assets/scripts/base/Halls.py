@@ -123,6 +123,6 @@ class Halls(KBEngine.Entity):
 		# space已经创建好了， 现在可以将之前请求进入的玩家全部丢到cell地图中
 		for infos in self.rooms[roomKey]["enterRoomReqs"]:
 			entityCall = infos[0]
-			entityCall.createCell(roomEntityCall.cell)
+			entityCall.createCell(roomEntityCall.cell, roomKey)
 			
 		self.rooms[roomKey]["enterRoomReqs"] = []
