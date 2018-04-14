@@ -6,7 +6,7 @@ namespace KBEngine
     using System.Collections.Generic;
     using System.Linq;
 
-    public class Avatar : KBEngine.EntityCommon
+    public class Avatar : AvatarBase
     {
         public Avatar()
         {
@@ -14,14 +14,14 @@ namespace KBEngine
 
         public override void __init__()
         {
-		if (isPlayer())
-		{
-			Event.registerIn("relive", this, "relive");
-			Event.registerIn("updatePlayer", this, "updatePlayer");
+            if (isPlayer())
+            {
+                Event.registerIn("relive", this, "relive");
+                Event.registerIn("updatePlayer", this, "updatePlayer");
 
-			// 触发登陆成功事件
-			Event.fireOut("onLoginSuccessfully", new object[] { KBEngineApp.app.entity_uuid, id, this });
-		}
+                // 触发登陆成功事件
+                Event.fireOut("onLoginSuccessfully", new object[] { KBEngineApp.app.entity_uuid, id, this });
+            }
         }
 
         public override void onDestroy()
@@ -56,39 +56,40 @@ namespace KBEngine
             direction.z = yaw;
         }
 
-        public virtual void set_name(object old)
+        public override void onModelIDChanged(Byte old)
         {
-            object v = getDefinedProperty("name");
+            // Dbg.DEBUG_MSG(className + "::set_modelID: " + old + " => " + v); 
+            Event.fireOut("set_modelID", new object[] { this, this.modelID });
+        }
+
+        public override void onNameChanged(string old)
+        {
             // Dbg.DEBUG_MSG(className + "::set_name: " + old + " => " + v); 
-            Event.fireOut("set_name", new object[] { this, v });
+            Event.fireOut("set_name", new object[] { this, this.name });
         }
 
-        public virtual void set_mass(object old)
+        public override void onMassChanged(Int32 old)
         {
-            object v = getDefinedProperty("mass");
             // Dbg.DEBUG_MSG(className + "::set_mass: " + old + " => " + v); 
-            Event.fireOut("set_mass", new object[] { this, v });
+            Event.fireOut("set_mass", new object[] { this, this.mass });
         }
 
-        public virtual void set_level(object old)
+        public override void onLevelChanged(Byte old)
         {
-            object v = getDefinedProperty("level");
             // Dbg.DEBUG_MSG(className + "::set_level: " + old + " => " + v); 
-            Event.fireOut("set_level", new object[] { this, v });
+            Event.fireOut("set_level", new object[] { this, this.level });
         }
 
-        public virtual void set_moveSpeed(object old)
+        public override void onMoveSpeedChanged(float old)
         {
-            object v = getDefinedProperty("moveSpeed");
             // Dbg.DEBUG_MSG(className + "::set_moveSpeed: " + old + " => " + v); 
-            Event.fireOut("set_moveSpeed", new object[] { this, v });
+            Event.fireOut("set_moveSpeed", new object[] { this, this.moveSpeed });
         }
 
-        public virtual void set_modelScale(object old)
+        public override void onModelScaleChanged(float old)
         {
-            object v = getDefinedProperty("modelScale");
             // Dbg.DEBUG_MSG(className + "::set_modelScale: " + old + " => " + v); 
-            Event.fireOut("set_modelScale", new object[] { this, v });
+            Event.fireOut("set_modelScale", new object[] { this, this.modelScale });
         }
     }
 }
