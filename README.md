@@ -5,4 +5,5 @@ readme中描述的服务器kbengine_demos_assets直接用balls_server_assets替�
 
 
 ## Screenshots:
-![screenshots1](https:/kbengine.github.io/assets/img/screenshots/balls_demo1.png)
+![screenshots1](http://kbengine.github.io/assets/img/screenshots/balls_demo1.png)
+
