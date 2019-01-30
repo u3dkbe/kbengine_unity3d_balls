@@ -226,6 +226,7 @@ namespace KBEngine
 
 			//Dbg.DEBUG_MSG("EntityDef::initScriptModules: add(Avatar), property(state / 8).");
 
+			pAvatarModule.useMethodDescrAlias = true;
 			ScriptModule pFoodModule = new ScriptModule("Food");
 			EntityDef.moduledefs["Food"] = pFoodModule;
 			EntityDef.idmoduledefs[4] = pFoodModule;
@@ -288,6 +289,7 @@ namespace KBEngine
 
 			//Dbg.DEBUG_MSG("EntityDef::initScriptModules: add(Food), property(modelID / 14).");
 
+			pFoodModule.useMethodDescrAlias = true;
 			ScriptModule pSmashModule = new ScriptModule("Smash");
 			EntityDef.moduledefs["Smash"] = pSmashModule;
 			EntityDef.idmoduledefs[5] = pSmashModule;
@@ -365,6 +367,7 @@ namespace KBEngine
 
 			//Dbg.DEBUG_MSG("EntityDef::initScriptModules: add(Smash), property(modelScale / 16).");
 
+			pSmashModule.useMethodDescrAlias = true;
 		}
 
 		public static void initDefTypes()
@@ -546,7 +549,7 @@ namespace KBEngine
 			}
 
 			{
-				UInt16 utype = 10;
+				UInt16 utype = 20;
 				string typeName = "ENTITYCALL";
 				string name = "ENTITYCALL";
 				DATATYPE_BASE val = null;
