@@ -15,6 +15,7 @@ namespace KBEngine
 		public UInt16 componentType = 0;
 		public Int32 ownerID = 0;
 		public Entity owner = null;
+		public string name_ = "";
 
 		public virtual void onAttached(Entity ownerEntity)
 		{
@@ -24,6 +25,14 @@ namespace KBEngine
 		public virtual void onDetached(Entity ownerEntity)
 		{
 
+		}
+
+		public virtual void onEnterworld()
+		{
+		}
+
+		public virtual void onLeaveworld()
+		{
 		}
 
         public virtual ScriptModule getScriptModule()
