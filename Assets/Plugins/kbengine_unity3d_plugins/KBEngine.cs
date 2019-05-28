@@ -87,7 +87,7 @@
 		
 		// 服务端与客户端的版本号以及协议MD5
 		public string serverVersion = "";
-		public string clientVersion = "1.3.4";
+		public string clientVersion = "1.3.6";
 		public string serverScriptVersion = "";
 		public string clientScriptVersion = "0.1.0";
 		public string serverProtocolMD5 = "54CD47A660DFCF947A0F9D9365230536";
@@ -2274,19 +2274,19 @@
 			if(roll != KBEMath.KBE_FLT_MAX)
 			{
 				changeDirection = true;
-				entity.direction.x = isOptimized ? KBEMath.int82angle((SByte)roll, false) * 360 / ((float)System.Math.PI * 2) : roll;
+				entity.direction.x = (isOptimized ? KBEMath.int82angle((SByte)roll, false) : roll) * 360 / ((float)System.Math.PI * 2);
 			}
 
 			if(pitch != KBEMath.KBE_FLT_MAX)
 			{
 				changeDirection = true;
-				entity.direction.y = isOptimized ? KBEMath.int82angle((SByte)pitch, false) * 360 / ((float)System.Math.PI * 2) : pitch;
+				entity.direction.y = (isOptimized ? KBEMath.int82angle((SByte)pitch, false) : pitch) * 360 / ((float)System.Math.PI * 2);
 			}
 			
 			if(yaw != KBEMath.KBE_FLT_MAX)
 			{
 				changeDirection = true;
-				entity.direction.z = isOptimized ? KBEMath.int82angle((SByte)yaw, false) * 360 / ((float)System.Math.PI * 2) : yaw;
+				entity.direction.z = (isOptimized ? KBEMath.int82angle((SByte)yaw, false) : yaw) * 360 / ((float)System.Math.PI * 2);
 			}
 			
 			bool done = false;
