@@ -8,7 +8,6 @@
 	using System.Text;
 	using System.Text.RegularExpressions;
 	using System.Threading;
-	using System.Runtime.Remoting.Messaging;
 
 	using MessageID = System.UInt16;
 	using MessageLength = System.UInt16;
@@ -19,7 +18,7 @@
 	*/
 	public abstract class PacketReceiverBase
 	{
-		protected delegate void AsyncReceiveMethod(); 
+		public delegate void AsyncReceiveMethod(); 
 		protected MessageReaderBase _messageReader = null;
 		protected NetworkInterfaceBase _networkInterface = null;
 
@@ -41,17 +40,23 @@
 
 		public virtual void startRecv()
 		{
-			var v = new AsyncReceiveMethod(this._asyncReceive);
-			v.BeginInvoke(new AsyncCallback(_onRecv), null);
+			AsyncReceiveMethod asyncReceiveMethod = new AsyncReceiveMethod(this._asyncReceive);
+			asyncReceiveMethod.BeginInvoke(new AsyncCallback(_onRecv), asyncReceiveMethod);
 		}
 
 		protected abstract void _asyncReceive();
 
 		private void _onRecv(IAsyncResult ar)
 		{
-			AsyncResult result = (AsyncResult)ar;
-			AsyncReceiveMethod caller = (AsyncReceiveMethod)result.AsyncDelegate;
-			caller.EndInvoke(ar);
+			try
+			{
+				AsyncReceiveMethod caller = (AsyncReceiveMethod)ar.AsyncState;
+				caller.EndInvoke(ar);
+			}
+			catch(ObjectDisposedException)
+			{
+				//通常出现这个错误, 是因为longin_baseapp时, networkInterface已经reset, _packetReceiver被置为null, 而之后刚好该回调被调用
+			}
 		}
 	}
 } 
